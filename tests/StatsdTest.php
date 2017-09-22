@@ -4,7 +4,7 @@ namespace StatsdTests;
 
 use PHPUnit_Framework_TestCase;
 use Mockery as m;
-use rcrowe\Statsd\Statsd;
+use SpiriaDigital\Statsd\Statsd;
 
 class StatsdTest extends PHPUnit_Framework_TestCase
 {

@@ -3,11 +3,11 @@
 /**
  * Talk to Statsd from Laravel.
  *
- * @author Rob Crowe <hello@vivalacrowe.com>
+ * @author Spiria-Digital
  * @license MIT
  */
 
-namespace rcrowe\Statsd;
+namespace SpiriaDigital\Statsd;
 
 use Liuggio\StatsdClient\Factory\StatsdDataFactoryInterface;
 use Liuggio\StatsdClient\Entity\StatsdDataInterface;
@@ -162,8 +162,8 @@ class Statsd implements StatsdDataFactoryInterface
     /**
      * Sends stored metrics to Statsd if there are any and sending is enabled.
      *
-     * @see \rcrowe\Statsd\Statsd::disable()
-     * @see \rcrowe\Statsd\Statsd::enable()
+     * @see \SpiriaDigital\Statsd\Statsd::disable()
+     * @see \SpiriaDigital\Statsd\Statsd::enable()
      *
      * @return void
      */

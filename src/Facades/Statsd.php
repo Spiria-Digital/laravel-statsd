@@ -3,11 +3,11 @@
 /**
  * Talk to Statsd from Laravel.
  *
- * @author Rob Crowe <hello@vivalacrowe.com>
+ * @author Spiria-Digital
  * @license MIT
  */
 
-namespace rcrowe\Statsd\Facades;
+namespace SpiriaDigital\Statsd\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

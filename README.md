@@ -1,43 +1,48 @@
 Allows you to seamlessly send data to a Statsd server from within your Laravel application.
 
-[![Build Status](https://travis-ci.org/rcrowe/laravel-statsd.png?branch=master)](https://travis-ci.org/rcrowe/laravel-statsd)
+[![Packagist License](https://poser.pugx.org/barryvdh/laravel-debugbar/license.png)](http://choosealicense.com/licenses/mit/)
+[![Build Status](https://travis-ci.org/Spiria-Digital/laravel-statsd.svg?branch=master)](https://travis-ci.org/Spiria-Digital/laravel-statsd)
 
 Installation
 ============
 
-Add `rcrowe\laravel-statsd` as a requirement to composer.json:
+Add `Spiria-Digital\laravel-statsd` package with composer
 
-```javascript
-{
-    "require": {
-        "rcrowe/laravel-statsd": "0.5.*"
-    }
-}
+```php
+composer require Spiria-Digital/laravel-statsd:0.5.4
 ```
 
 Update your packages with `composer update` or install with `composer install`.
 
-Once Composer has installed or updated your packages you need to register Statsd with Laravel itself. Open up app/config/app.php and find the providers key towards the bottom and add:
+**Laravel >5.5**
+
+Since version 5.5, Laravel support Package Auto-Discovery, which means that Service Provider and aliases can be added automatically through the package composer file. Therefore, once Composer has installed or updated your packages Laravel-Statsd should be registered as a service provider and should provide the `Statsd` Facade.
+
+**Laravel <5.4**
+
+If you are using an older verison of Laravel you must add the provider and the alias manually. 
+
+You can register Statsd with Laravel by opening up app/config/app.php and adding the providers key in the `providers` array:
 
 ```php
-'rcrowe\Statsd\StatsdServiceProvider'
+'Spiria-Digital\Statsd\StatsdServiceProvider'
 ```
 
-You will also need to register the facade so that you can access it within your application. To do this add the following to your aliases in app/config/app.php:
+You will also need to register the facade so that you can access it within your application. To do this add the following to your `aliases` in app/config/app.php:
 
 ```php
-'Statsd' => 'rcrowe\Statsd\Facades\Statsd'
+'Statsd' => 'Spiria-Digital\Statsd\Facades\Statsd'
 ```
 
 Configuration
 =============
 
-Statsd configuration file can be extended by creating `app/config/packages/rcrowe/laravel-statsd/config.php`. You can find the default configuration file at vendor/rcrowe/laravel-statsd/src/config/config.php.
+Statsd configuration file can be extended by creating `app/config/statsd.php`. You can find the default configuration file under `vendor/Spiria-Digital/laravel-statsd/config/config.php`.
 
 You can quickly publish a configuration file by running the following Artisan command.
 
 ```
-$ php artisan config:publish rcrowe/laravel-statsd
+$ php artisan config:publish Spiria-Digital/laravel-statsd
 ```
 
 Usage
@@ -76,3 +81,5 @@ Statsd::send()
 ```
 
 Note: Data will only be sent to Statsd if your environment matches the environments defined in the config file.
+
+This package is an updated version of rcrowe/laravel-statsd and has been tested with laravel 5.4+ only. It does not currently support Lumen.

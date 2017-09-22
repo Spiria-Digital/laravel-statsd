@@ -19,3 +19,4 @@ tmtags
 ## Composer
 composer.lock
 vendor
+.idea/

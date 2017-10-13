@@ -9,7 +9,7 @@
 
 namespace SpiriaDigital\Statsd;
 
-use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use SpiriaDigital\Statsd\Middleware\StatsdTerminate;
 
@@ -23,6 +23,10 @@ class StatsdServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
+    //
+    protected $config;
+    protected $enabled = false;
+
     /**
      * Register the service provider.
      *
@@ -32,20 +36,28 @@ class StatsdServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom($this->configPath(), 'statsd');
 
+        $environments = $this->app['config']->get('statsd.staging.environments', array());
+        $current_environment = $this->app['env'];
+        if (is_array($environments) AND in_array($current_environment, $environments)) {
+            $this->config = $this->app['config']->get('statsd.staging', array());
+            $this->enabled = true;
+        } else {
+            $environments = $this->app['config']->get('statsd.production.environments', array());
+            if (is_array($environments) AND in_array($current_environment, $environments)){
+                $this->config = $this->app['config']->get('statsd.production', array());
+                $this->enabled = true;
+            }
+        }
+
         $this->app->singleton('statsd', function ($app) {
-            $statsd =  new Statsd(
-                $app['config']->get('statsd.host', 'localhost'),
-                $app['config']->get('statsd.port', 8126),
-                $app['config']->get('statsd.protocol', 'udp')
-            );
+            $statsd =  new Statsd($this->config['host'],$this->config['port'], $this->config['protocol']);
+
             // Disable logging if we aren't on the right environment
-            $environments        = $this->app['config']->get('statsd.environments', array());
-            $current_environment = $this->app['env'];
-            if (is_array($environments) AND !in_array($current_environment, $environments)) {
+            if(!$this->enabled){
                 $statsd->disable();
             }
-
             return $statsd;
+
         });
     }
 

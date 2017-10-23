@@ -1,12 +1,12 @@
 {
-    "name": "rcrowe/laravel-statsd",
+    "name": "spiria-digital/laravel-statsd",
     "description": "Send to Statsd server from Laravel",
     "keywords": ["laravel", "statsd"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Rob Crowe",
-            "email": "hello@vivalacrowe.com"
+            "name": "Spiria-Digital",
+            "homepage": "https://www.spiria.com"
         }
     ],
     "require": {
@@ -17,8 +17,18 @@
         "mockery/mockery": "0.7.2"
     },
     "autoload": {
-        "psr-0": {
-            "rcrowe\\Statsd": "src/"
+        "psr-4": {
+            "SpiriaDigital\\Statsd\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SpiriaDigital\\Statsd\\StatsdServiceProvider"
+            ],
+            "aliases": {
+                "Statsd": "SpiriaDigital\\Statsd\\Facades\\Statsd"
+            }
         }
     }
 }

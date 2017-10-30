@@ -18,14 +18,34 @@ class StatsdServiceProvider extends ServiceProvider
 
     /**
      * Indicates if loading of the provider is deferred.
-     *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer;
 
-    //
+    /**
+     * Statsd Socket configuration.
+     * @var   array
+     */
     protected $config;
-    protected $enabled = false;
+
+    /**
+     * Indicates if statsd should send data.
+     * @var bool
+     */
+    protected $enabled;
+
+
+    /**
+     * Service provider constructor.
+     *
+     * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->defer = false;
+        $this->enabled = false;
+    }
 
     /**
      * Register the service provider.
@@ -50,11 +70,12 @@ class StatsdServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton('statsd', function ($app) {
-            $statsd =  new Statsd($this->config['host'],$this->config['port'], $this->config['protocol']);
 
-            // Disable logging if we aren't on the right environment
-            if(!$this->enabled){
-                $statsd->disable();
+            if($this->enabled){
+                $statsd =  new Statsd($this->config['host'],$this->config['port'], $this->config['protocol']);
+            } else {
+                $statsd = new Statsd();
+                $statsd->disable();             // Disable logging if we aren't on the right environment
             }
             return $statsd;
 

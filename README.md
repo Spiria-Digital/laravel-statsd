@@ -9,7 +9,7 @@ Installation
 Add `Spiria-Digital\laravel-statsd` package with composer
 
 ```php
-composer require Spiria-Digital/laravel-statsd:0.5.4
+composer require Spiria-Digital/laravel-statsd:5.5.1
 ```
 
 Update your packages with `composer update` or install with `composer install`.
